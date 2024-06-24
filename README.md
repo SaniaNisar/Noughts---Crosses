@@ -1,4 +1,4 @@
-# ✅✖️ Tic-Tac-Toe Game in C++
+# ◯✖️ Noughts & Crosses / ✅✖️ Tic-Tac-Toe Game in C++
 Welcome to the Tic Tac Toe Game in C++ repository! 🎮
 
 ## About the Game
