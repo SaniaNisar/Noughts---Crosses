@@ -1,236 +1,214 @@
-#include<Windows.h>
-#include<conio.h>
 #include<iostream>
+#include<conio.h>  // getch() 
+#include<fstream>
+#include<Windows.h>  // getch() clrscr()
 #include<string>
+#include<vector>
+#include<time.h>  
 #include<cstring>
 
+
 using namespace std;
+void HideCursor()
+{
+    HANDLE cursor = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_CURSOR_INFO idk;
+    idk.dwSize = 1;
+    idk.bVisible = FALSE;
+    SetConsoleCursorInfo(cursor, &idk);
+}
+int live = 8;
+int lost = 1;
+
 void gotoxy(int x, int y)
 {
-	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
-	COORD axis;
-	axis.X = x;
-	axis.Y = y;
-	SetConsoleCursorPosition(handle, axis);
+    HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+    COORD axis;
+    axis.X = x;
+    axis.Y = y;
+    SetConsoleCursorPosition(handle, axis);
 }
-void playgame()
+void Lives()
 {
-	system("cls");
-	char box[10] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-    int p = 1; 
-	int i;
-	int choice;
-    char symbol;
-    char str1[20];
-    char str2[20];
-
-    system("Color 06");
-    cout << "\t\t\t----------WELCOME TO TIC TAC TOE-----------" << endl;
-    cout<<"Enter name of Player 1: "<<endl;
-    cin>>str1;
-    cout<<"Enter name of Player 2: "<<endl;
-    cin>>str2;
-    cout<<"\t\t\t"<< str1<< " and "<< str2 <<" welcome to game \t"<<endl;
-	do
-	{
-		cout << "\n\nPlayer 1 (X)  -  Player 2 (O)" << endl << endl;
-		cout << endl;
-
-		cout << "\t\t\t\t      |     |     " << endl;
-		cout << "\t\t\t\t   " << box[1] << "  |  " << box[2] << "  |  " << box[3] << endl;
-
-		cout << "\t\t\t\t _______" <<"  _______"<< endl;
-		cout << "\t\t\t\t      |     |     " << endl;
-
-		cout << "\t\t\t\t   " << box[4] << "  |  " << box[5] << "  |  " << box[6] << endl;
-
-		cout << "\t\t\t\t _______" <<"  _______"<< endl;
-		cout << "\t\t\t\t      |     |     " << endl;
-
-		cout << "\t\t\t\t   " << box[7] << "  |  " << box[8] << "  |  " << box[9] << endl;
-
-		cout << "\t\t\t\t      |     |     " << endl << endl;
-
-
-		if (p % 2) {
-			p = 1;
-		}
-		else {
-			p = 2;
-		}
-
-
-		if (p == 1) {
-			symbol = 'X';
-		}
-		else {
-			symbol = 'O';
-		}
-
-
-
-		cout << "Player " << p << ", enter a number:  ";
-		cin >> choice;
-
-
-		if (choice == 1 && box[1] == '1')
-
-			box[1] = symbol;
-		else if (choice == 2 && box[2] == '2')
-
-			box[2] = symbol;
-		else if (choice == 3 && box[3] == '3')
-
-			box[3] = symbol;
-		else if (choice == 4 && box[4] == '4')
-
-			box[4] = symbol;
-		else if (choice == 5 && box[5] == '5')
-
-			box[5] = symbol;
-		else if (choice == 6 && box[6] == '6')
-
-			box[6] = symbol;
-		else if (choice == 7 && box[7] == '7')
-
-			box[7] = symbol;
-		else if (choice == 8 && box[8] == '8')
-
-			box[8] = symbol;
-		else if (choice == 9 && box[9] == '9')
-
-			box[9] = symbol;
-		else
-		{
-			cout << "Already entered this number , please enter again ";
-			cout<<  "Enter valid number ";
-		}
-		//i = checkwin();
-		if (box[1] == box[2] && box[2] == box[3])
-
-			i = 1;
-		else if (box[4] == box[5] && box[5] == box[6])
-
-			i = 1;
-		else if (box[7] == box[8] && box[8] == box[9])
-
-			i = 1;
-		else if (box[1] == box[4] && box[4] == box[7])
-
-			i = 1;
-		else if (box[2] == box[5] && box[5] == box[8])
-
-			i = 1;
-		else if (box[3] == box[6] && box[6] == box[9])
-
-			i = 1;
-		else if (box[1] == box[5] && box[5] == box[9])
-
-			i = 1;
-		else if (box[3] == box[5] && box[5] == box[7])
-
-			i = 1;
-		else if (box[1] != '1' && box[2] != '2' && box[3] != '3'
-			&& box[4] != '4' && box[5] != '5' && box[6] != '6'
-			&& box[7] != '7' && box[8] != '8' && box[9] != '9')
-
-			i = 0;
-		else
-			i = -1;
-
-		p++;
-	} while (i == -1);
-
-	system("cls");
-	cout << "\n\n\tTic Tac Toe\n\n";
-
-	cout << "Player 1 (X)  -  Player 2 (O)" << endl << endl;
-	cout << endl;
-
-	cout << "\t\t\t\t      |     |     " << endl;
-	cout << "\t\t\t\t   " << box[1] << "  |  " << box[2] << "  |  " << box[3] << endl;
-
-	cout << "\t\t\t\t _______"<<"_______" << endl;
-	cout << "\t\t\t\t      |     |     " << endl;
-
-	cout << "\t\t\t\t   " << box[4] << "  |  " << box[5] << "  |  " << box[6] << endl;
-
-	cout << "\t\t\t\t ______" <<"_______"<< endl;
-	cout << "\t\t\t\t      |     |     " << endl;
-
-	cout << "\t\t\t\t   " << box[7] << "  |  " << box[8] << "  |  " << box[9] << endl;
-
-	cout << "\t\t\t\t      |     |     " << endl << endl;
-
-	if (i == 1)
-
-		cout << "Player " << --p << " win " << endl;
-	else
-		cout << "Game draw" << endl;
+    gotoxy(21, 2);
+    cout << live-- << endl;
 }
-void WelcomeMessage()
-{ 
-	system("Color 02");
-	Sleep(40);
-	char ch;
-	int x = 13;
-	int y = 6;
-	gotoxy(x+9, y);
-	cout<<" ________        _______      _______       ";
-	gotoxy(x+8, y + 1);
-	cout<<"   |  |  0  ___    |  |___ __   |  |  __   ___";
-	gotoxy(x+8, y + 2);                            
-	cout<<"   |  |  | |       |  | o |     |  | |  | |___";
-	gotoxy(x+8, y + 3);
-	cout<<"   |__|  | |___    |__|_|_|__   |__| |__| |___ ";
-	gotoxy(x+8, y + 4);
-	cout<<"      ";
-	gotoxy(x+8, y + 7 );
-	cout<<"              Press '1' to play game"<<endl;
-	cout<<"                                Press '2' to see instructions"<<endl;
-	cout<<"                                   Press '0' to exit game"<<endl;
-	ch = _getch();
-	if (ch=='1')
-	{
-	  	playgame();
-	}
-			  
-    if (ch=='2')
+
+void Output(string text)
+{
+    bool flag = true;
+    for (int i = text.length(); i < 33; i++) // returns the length of string similar to size()
     {
-    	system("Color 0E");
-		Sleep(40);
-	  	system("cls");
-	  	cout<<"           I N S T R U C T I O N S :"<<endl;
-	  	cout<<endl;
-	  	cout<<endl;
-		
-		cout<<"(1)          Player one has mark x"<<endl;
-		cout<<"(2)          Player one has mark 0"<<endl;
-		cout<<"(3)          Play and enjoy."<<endl;
-		cout<<endl;
-	  	cout<<endl;
-	  	cout<<"             Press '1' to play game"<<endl;
-		cout<<"             Press '0' to exit game"<<endl;
-		cout<<"             Press any key to exit game"<<endl;
-		ch = _getch();
-		
-		if(ch=='1')
-		{
-		    playgame();
-		}
-	  	if(ch=='0')
-		{
-			exit(0);
-		}
+        if (flag)
+        {
+            text = " " + text;
+        }
+        else
+        {
+            text = text + " ";
+        }
+        flag = !flag;
     }
-	if (ch=='0')
-	{
-	exit(0);
-	}
+    cout << text.c_str() << endl; // Returns a pointer to an array that contains a null-terminated sequence of characters (i.e., a C-string) representing the current value of the string object.
+
+    //same sequence of characters that make up the value of the string plus an additional  ('\0') at the end.
+
+}
+string GetInput(string demofile)
+{
+    vector<string> check;
+    string word = "";
+    int line;
+
+    ifstream fin("demo.txt");
+    if (fin.is_open())
+    {
+        while (std::getline(fin, word))
+            check.push_back(word); //to add new thing at the end
+
+        line = rand() % check.size();
+        word = check.at(line);
+
+        fin.close();
+    }
+    Lives();
+    return word;
+}
+bool Print(string word, string user_guess)
+{
+    bool victory = true;
+    string star;
+    int chck = word.length();
+    int count = 0;
+
+    for (int i = 0; i < word.length(); i++)
+    {
+
+        if (user_guess.find(word[i]) == string::npos) //value for a length parameter in the strings member functions.
+        {
+            victory = false;
+            star += "_ ";
+        }
+        else
+        {
+            star += word[i];
+            star += " ";
+            count++;
+        }
+    }
+    if (count == 0)
+    {
+        lost++;
+    }
+
+    Lives();
+
+    Output(star);
+
+    return victory;
+}
+
+void WelcomeMessage()
+{
+    char ch;
+    int x = 30;
+    int y = 10;
+    gotoxy(x, y);
+    system("Color 0E");
+    cout << "      ___                                       ";
+    gotoxy(x + 6, y + 1);
+    cout << "| |____   ___  ___  ___     ___  ___  _____   _ __ ";
+    gotoxy(x + 6, y + 2);
+    cout << "|  __  | | o | |  ||  __   |  |_|  | |  o  | | |--|";
+    gotoxy(x + 6, y + 3);
+    cout << "|__| |_| |_|_| |  ||____|  |       | |_| |_| |_|  |   ";
+    gotoxy(x + 6, y + 4);
+    cout << "      ";
+    gotoxy(x, y + 6);
+    cout << "                 Press '1' to play game" << endl;
+    cout << "                                             Press '2' to see instructions" << endl;
+    cout << "                                               Press '0' to exit game" << endl;
+    ch = _getch();
+    if (ch == '1')
+    {
+       /* Lives();*/
+    }
+
+    if (ch == '2')
+    {
+        system("cls");
+        system("Color 06");
+        gotoxy(45, 8);
+        cout << " I N S T R U C T I O N S :" << endl;
+        cout << endl;
+        cout << endl;
+
+        cout << "                                   (1)  The word to be guessed is in demo file" << endl;
+        cout << "                                   (2)  You have 7 turns in order to reach the word" << endl;
+        cout << "                                   (3)  Play and enjoy." << endl;
+        cout << endl;
+        cout << endl;
+        cout << "                                           Press '1' to play game" << endl;
+        cout << "                                           Press '0' or any key to exit game" << endl;
+        ch = _getch();
+
+        if (ch == '1')
+        {
+            /*Lives();*/
+        }
+        if (ch == '0')
+        {
+            exit(0);
+        }
+    }
+    if (ch == '0')
+    {
+        exit(0);
+    }
 }
 
 int main()
 {
-	WelcomeMessage();
-}
+    HideCursor();
+    WelcomeMessage();
 
+    srand(time(0));   // initialize the random number generator
+    Sleep(40);
+
+
+    string guessing;
+    string Guess;
+    Guess = GetInput("demo.txt");
+    bool won = false;
+    int ch = 8;
+
+
+    do
+    {
+        system("cls");
+        system("Color 4");
+        Output("   Welcome to Hangman...");
+        Output("   LIVES AVAILABLE:");
+        cout << endl;
+
+        won = Print(Guess, guessing);
+
+        if (won)
+            break;
+
+        char alpha;
+        cout << endl;
+        cout << "Enter your GUESS : ";
+        cin >> alpha;
+        ch--;
+        guessing += alpha;
+    } while (ch != 0);
+
+    if (won)
+        Output("Congratulations Buddy YOU WONNNNN!");
+    else
+        Output("GAME OVER......");
+    Output("You are on your way out.....");
+
+    return 0;
+}
